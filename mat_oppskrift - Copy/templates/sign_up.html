@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+    <meta charset="UTF-8">
+    <title>Registrer bruker</title>
+    <style>
+        body { font-family: Arial, sans-serif; background-color: #f9f9f9; margin: 0; padding: 40px; }
+        .container { max-width: 400px; margin: auto; background: white; padding: 30px; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+        h2 { text-align: center; color: #2c3e50; }
+        input[type="text"], input[type="password"] {
+            width: 100%; padding: 10px; margin: 8px 0; border: 1px solid #ccc; border-radius: 5px;
+        }
+        button {
+            width: 100%; padding: 10px; background-color: #2c3e50; color: white; border: none; border-radius: 5px;
+            cursor: pointer; font-size: 16px;
+        }
+        button:hover { background-color: #34495e; }
+        p { text-align: center; margin-top: 15px; }
+        a { color: #2c3e50; text-decoration: none; font-weight: bold; }
+        a:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Lag ny bruker</h2>
+        <form action="/signup" method="POST">
+            <label>Brukernavn:</label>
+            <input type="text" name="username" required>
+
+            <label>Passord:</label>
+            <input type="password" name="password" required>
+
+            <button type="submit">Registrer</button>
+        </form>
+        <p>Har du allerede en bruker? <a href="/login">Logg inn her</a></p>
+    </div>
+</body>
+</html>
