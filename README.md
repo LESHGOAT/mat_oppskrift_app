@@ -1,54 +1,78 @@
-Flask-prosjekt – Dokumentasjon
-1.	Forside
-Prosjekttittel: TO-DO LIST
+Matoppskrift – Flask Prosjekt
+
 Navn: Omar Dakhil
 Klasse: 2 IMI
 Dato: 11.03.2025
-Kort beskrivelse av prosjektet:
-Dette prosjektet er en enkel to-do-applikasjon laget med Flask. Brukeren kan skrive inn oppgaver i et skjema, og se dem dukke opp i en liste på nettsiden. Målet med prosjektet er å lære hvordan Flask fungerer sammen med HTML-skjemaer og hvordan data kan sendes mellom frontend og backend. Senere skal applikasjonen utvides med en database for å lagre oppgavene permanent.
-Skjermbilde: legg inn skjermbilde av startside her
-2.	Systembeskrivelse
-Formål med applikasjonen: Målet var å lage en fungerende to-do-applikasjon som demonstrerer kunnskap i Flask og Python, samt grunnleggende HTML-skjemaer og datastrøm fra frontend til backend.
-Brukerflyt: Brukeren åpner nettsiden, skriver inn en oppgave i skjemaet, oppgaven blir sendt til Flask-backend via POST-metoden, og vises i en liste på siden. Senere vil oppgavene lagres i MySQL-database for permanent lagring.
-Teknologier brukt: Python / Flask, MySQL, HTML / CSS
-Skjermbilde: legg inn skjermbilde av brukerflyt eller skjema her
-3.	Databasebeskrivelse
-Databasenavn: mat_oppskrift
-Tabeller: Tabell oppskrift har feltene id som primærnøkkel, name som VARCHAR, ingredienser som TEXT, fremgangsmåte som TEXT, koketid som FLOAT, prsjoner som INT.
-SQL-eksempel: CREATE TABLE oppskrift med id, name, ingredienser, fremgangsmåte, koketid og prsjoner.
-Relasjoner mellom tabeller: foreløpig ingen, da prosjektet kun har én tabell.
-Skjermbilde: legg inn skjermbilde av tabellstruktur i MySQL her
-________________________________________
-4.	Programstruktur
-Mappestruktur: prosjektmappen mat_oppskrift inneholder app.py som Flask-applikasjon og backend-logikk, templates/index.html for HTML-skjema og listevisning, static/style.css for styling, og .env som lagrer miljøvariabler for MySQL.
-Databasestrøm: HTML-skjema går til Flask (Python), videre til MySQL, tilbake til Flask og vises i HTML-liste.
-Skjermbilde: legg inn skjermbilde av prosjektmappe her
-________________________________________
-5.	Kodeforklaring
-Eksempel på rute i Flask: ruten tar imot data fra HTML-skjema, kobler til MySQL-database, setter inn data i tabellen og sender brukeren tilbake til oversiktssiden.
-Jeg opplevde flere frustrerende problemer underveis: først fikk jeg en “Internal Server Error 500” når jeg prøvde å legge til oppskrifter. Etter mye frustrasjon oppdaget jeg at koketid og porsjoner ble sendt som tekst (string) fra HTML-skjemaet, mens databasen forventet float og int. Etter at jeg konverterte disse verdiene til riktige datatyper, begynte det å fungere.
-Jeg hadde også problemer med MySQL-bruker og rettigheter. Jeg fikk “Access denied” flere ganger før jeg opprettet en egen bruker med riktige privileges. Etter at dette ble fikset, kunne jeg koble til databasen uten problemer.
-Skjermbilde: legg inn skjermbilde av funksjonen i bruk her
-________________________________________
-6.	Sikkerhet og pålitelighet
-Bruk av .env og miljøvariabler: Passord og brukernavn lagres trygt i .env-filen, slik at de ikke ligger i koden.
-Eksempel: DB_HOST=localhost, DB_USER=flaskuser, DB_PASSWORD=hemmelig, DB_NAME=mat_oppskrift
-Bruk av parameteriserte spørringer: %s brukes for å forhindre SQL-injection.
-Andre sikkerhetstiltak: Validering av input, feilhåndtering og lukking av databaseforbindelser.
-Skjermbilde: legg inn skjermbilde av .env og innstillinger her
-________________________________________
-7.	Feilsøking og testing
-Typiske feil: fikk “Access denied” når brukeren ikke hadde riktige privilegier, fikk også “Template not found” før mappestrukturen var korrekt.
-Hvordan løste jeg det: laget riktig MySQL-bruker, testet tilkobling i Python, flyttet HTML-filer til templates-mappen, konverterte datatyper i POST-ruten for å unngå 500-error.
-Testmetoder: testet skjemaer manuelt i nettleser, brukte print() for å sjekke dataflyt, sjekket databasen med SELECT * FROM oppskrift.
-Skjermbilde: legg inn skjermbilde av testkjøringer her
-________________________________________
-8.	Konklusjon og refleksjon
-Hva lærte jeg: Jeg lærte hvordan Flask fungerer med HTML-skjemaer og hvordan man kobler til MySQL fra Python. Jeg lærte også å bruke .env for sikker lagring av passord og viktigheten av riktige datatyper ved innsending av skjema.
-Hva fungerte bra: Tilkoblingen til databasen og bruk av parameteriserte spørringer.
-Hva ville jeg gjort annerledes: Jeg ville laget databasen og MySQL-brukeren først for å unngå frustrerende feilmeldinger tidlig.
-Hva var utfordrende: Håndtering av MySQL-privilegier, riktig mappestruktur, og feilsøking av 500-error på grunn av datatyper. Løsningen var å teste steg-for-steg, konvertere verdier og sikre riktig brukerrettigheter.
-Skjermbilde: legg inn skjermbilde av endelig applikasjon her
+
+Dette er et skoleprosjekt hvor jeg laget en enkel nettside der man kan registrere bruker, logge inn og legge inn matoppskrifter. Oppskriftene lagres i en MySQL-database som kjører på en Raspberry Pi. Nettsiden er laget med Flask, HTML og CSS.
+
+Skjermbilde av nettsiden ligger i egen folder
+
+1. Formål
+
+Målet var å lage en fungerende webapplikasjon som kobler sammen Flask og en database. Jeg skulle lære hvordan man håndterer innlogging, registrering og lagring av data i MySQL.
+
+2. Hvordan nettsiden fungerer
+
+Når man åpner nettsiden kan man enten registrere en ny bruker eller logge inn hvis man allerede har en. Etter innlogging kommer man til en side der man kan legge inn en oppskrift. Når skjemaet sendes inn, blir informasjonen sendt til Flask og derfra lagret i databasen. Alle oppskrifter som er lagret vises deretter i en liste på nettsiden.
+
+Skjermbilde av skjema eller brukerflyt ligger i egen folder
+
+3. Database
+
+Jeg bruker en MySQL-database med to tabeller: en for brukere og en for oppskrifter. Brukertabellen inneholder brukernavn og passord (lagret som hash). Oppskriftstabellen inneholder navn, ingredienser, fremgangsmåte, koketid, porsjoner og hvem som la den inn.
+
+Databasen ligger på en Raspberry Pi, og Flask kobler til via localhost.
+
+Skjermbilde av database ligger i egen folder
+
+4. Mappestruktur
+
+Prosjektet er organisert slik at Flask-filene ligger i hovedmappen, HTML-filene ligger i templates-mappen, og CSS-filene ligger i static-mappen. En egen .env-fil brukes for å lagre databaseinformasjon som brukernavn, passord og databasenavn.
+
+Skjermbilde av mappestruktur ligger i egen folder
+
+5. Problemer underveis
+
+Under utviklingen støtte jeg på en del feil, blant annet:
+
+Innlegging av oppskrifter feilet fordi verdier som koketid og porsjoner ikke hadde riktig datatype i databasen. Dette løste jeg ved å endre datatypene.
+
+Databasen nektet tilgang i starten. Dette skyldtes manglende rettigheter på MySQL-brukeren. Jeg laget en ny bruker med riktige rettigheter, og da fungerte det.
+
+Flask fant ikke HTML-filene før jeg flyttet dem inn i templates-mappen, som Flask krever.
+
+Skjermbilde av feilsøking ligger i egen folder
+
+6. Sikkerhet
+
+Selv om prosjektet er enkelt, har jeg gjort noen grunnleggende sikkerhetstiltak. Passord lagres ikke direkte, men som hash. Jeg bruker .env-fil for å ikke ha databasepassord direkte i koden. Jeg bruker også parameteriserte spørringer for å unngå SQL-injection.
+
+Skjermbilde av .env eller sikkerhetsoppsett (masker passord)  ligger i egen folder
+
+7. Testing
+
+Jeg testet prosjektet ved å:
+
+registrere flere brukere
+
+logge inn og ut
+
+legge inn forskjellige oppskrifter
+
+sjekke at de dukket opp i databasen
+
+teste sletting
+
+teste feil passord og feil innlogging
+
+Skjermbilde av testing ligger i egen folder
+
+8. Konklusjon
+
+Prosjektet fungerer slik det var tenkt. Jeg fikk nettsiden til å kommunisere med databasen, og alt av registrering, innlogging og lagring fungerer. Jeg lærte mye om hvordan Flask og MySQL fungerer sammen, og hvordan man strukturerer et lite webprosjekt.
+
+Skjermbilde av ferdig resultat ligger i egen folder
 ________________________________________
 9.	Kildeliste
 https://www.w3schools.com/python/
