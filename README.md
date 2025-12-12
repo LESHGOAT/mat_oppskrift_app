@@ -42,13 +42,11 @@ Databasen nektet tilgang i starten. Dette skyldtes manglende rettigheter på MyS
 
 Flask fant ikke HTML-filene før jeg flyttet dem inn i templates-mappen, som Flask krever.
 
-Skjermbilde av feilsøking ligger i egen folder
-
 6. Sikkerhet
 
 Selv om prosjektet er enkelt, har jeg gjort noen grunnleggende sikkerhetstiltak. Passord lagres ikke direkte, men som hash. Jeg bruker .env-fil for å ikke ha databasepassord direkte i koden. Jeg bruker også parameteriserte spørringer for å unngå SQL-injection.
 
-Skjermbilde av .env eller sikkerhetsoppsett (masker passord)  ligger i egen folder
+Skjermbilde av .env  ligger i egen folder (det ligger mer info der men vil ikke at du skal se det hehe)
 
 7. Testing
 
@@ -65,8 +63,6 @@ sjekke at de dukket opp i databasen
 teste sletting
 
 teste feil passord og feil innlogging
-
-Skjermbilde av testing ligger i egen folder
 
 8. Konklusjon
 
