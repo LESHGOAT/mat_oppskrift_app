@@ -1,77 +1,86 @@
-Matoppskrift – Flask Prosjekt
+Flask-prosjekt – Dokumentasjon
+1. Forside
 
+Prosjekttittel: TO-DO LIST / Matoppskrift-applikasjon
 Navn: Omar Dakhil
 Klasse: 2 IMI
 Dato: 11.03.2025
 
-Dette er et skoleprosjekt hvor jeg laget en enkel nettside der man kan registrere bruker, logge inn og legge inn matoppskrifter. Oppskriftene lagres i en MySQL-database som kjører på en Raspberry Pi. Nettsiden er laget med Flask, HTML og CSS.
+Kort beskrivelse av prosjektet:
+Dette prosjektet er en webapplikasjon utviklet med Flask der brukere kan registrere seg, logge inn og legge til matoppskrifter. Oppskriftene lagres i en database og vises dynamisk på nettsiden. Målet med prosjektet har vært å lære hvordan backend, frontend og database kan fungere sammen i en fullstendig løsning.
 
-Skjermbilde av nettsiden ligger i egen folder
+2. Systembeskrivelse
 
-1. Formål
+Formål med applikasjonen:
+Formålet med prosjektet var å utvikle en fungerende webapplikasjon som demonstrerer bruk av Flask som backend-rammeverk, tilkobling mot database og håndtering av brukerinput via HTML-skjemaer. Prosjektet skulle også vise forståelse for grunnleggende autentisering og datasikkerhet.
 
-Målet var å lage en fungerende webapplikasjon som kobler sammen Flask og en database. Jeg skulle lære hvordan man håndterer innlogging, registrering og lagring av data i MySQL.
+Brukerflyt:
+Brukeren åpner nettsiden og blir sendt til innloggingssiden. Dersom brukeren ikke har konto, kan en ny bruker registreres. Etter innlogging får brukeren tilgang til hovedsiden der oppskrifter kan legges til via et skjema. Når skjemaet sendes inn, behandles data i Flask-backend, lagres i databasen og vises deretter i en tabell på nettsiden.
 
-2. Hvordan nettsiden fungerer
+Teknologier brukt:
+Python med Flask
+MariaDB
+HTML og CSS
 
-Når man åpner nettsiden kan man enten registrere en ny bruker eller logge inn hvis man allerede har en. Etter innlogging kommer man til en side der man kan legge inn en oppskrift. Når skjemaet sendes inn, blir informasjonen sendt til Flask og derfra lagret i databasen. Alle oppskrifter som er lagret vises deretter i en liste på nettsiden.
+Applikasjonen følger en klassisk klient–server-arkitektur der Flask fungerer som applikasjonsserver og MariaDB brukes som datalagring.
 
-Skjermbilde av skjema eller brukerflyt ligger i egen folder
+3. Server-, infrastruktur- og nettverksoppsett
 
-3. Database
+Servermiljø:
+Databasen kjører på en Raspberry Pi konfigurert som databaseserver. Flask-applikasjonen har blitt utviklet og testet fra egen maskin under utviklingsfasen.
 
-Jeg bruker en MySQL-database med to tabeller: en for brukere og en for oppskrifter. Brukertabellen inneholder brukernavn og passord (lagret som hash). Oppskriftstabellen inneholder navn, ingredienser, fremgangsmåte, koketid, porsjoner og hvem som la den inn.
+Nettverksoppsett:
+Klienten (nettleser) kommuniserer med Flask-applikasjonen via HTTP. Flask kobler seg videre til MariaDB-databasen på Raspberry Pi over lokalnettverket ved hjelp av brukernavn og passord lagret i miljøvariabler.
 
-Databasen ligger på en Raspberry Pi, og Flask kobler til via localhost.
+Tjenestekonfigurasjon:
+Database-tilkobling håndteres via miljøvariabler definert i .env-fil. Databasebrukeren har begrensede rettigheter for å øke sikkerheten.
 
-Skjermbilde av database ligger i egen folder
+4. Prosjektstyring – GitHub Projects (Kanban)
 
-4. Mappestruktur
+Prosjektet ble strukturert ved hjelp av GitHub Projects med Kanban-tavle. Arbeidet ble delt inn i kolonnene To Do, In Progress og Done. Oppgaver som innlogging, databasekobling og styling ble lagt inn som egne kort.
 
-Prosjektet er organisert slik at Flask-filene ligger i hovedmappen, HTML-filene ligger i templates-mappen, og CSS-filene ligger i static-mappen. En egen .env-fil brukes for å lagre databaseinformasjon som brukernavn, passord og databasenavn.
+Refleksjon:
+Kanban gjorde det enklere å holde oversikt over hva som var ferdig, hva som gjenstod og hva som var under arbeid. Dette bidro til bedre struktur og progresjon gjennom prosjektperioden.
 
-Skjermbilde av mappestruktur ligger i egen folder
+5. Databasebeskrivelse
 
-5. Problemer underveis
+Databasenavn: mat_oppskrift
 
-Under utviklingen støtte jeg på en del feil, blant annet:
+Databasen består av to tabeller. Den ene tabellen lagrer oppskrifter, og den andre lagrer brukerinformasjon for innlogging.
 
-Innlegging av oppskrifter feilet fordi verdier som koketid og porsjoner ikke hadde riktig datatype i databasen. Dette løste jeg ved å endre datatypene.
+Oppskrift-tabellen inneholder informasjon som navn på oppskrift, ingredienser, fremgangsmåte, koketid, antall porsjoner og hvilken bruker som la den til.
+Bruker-tabellen inneholder brukernavn og passord lagret som hash.
 
-Databasen nektet tilgang i starten. Dette skyldtes manglende rettigheter på MySQL-brukeren. Jeg laget en ny bruker med riktige rettigheter, og da fungerte det.
+Det er foreløpig ingen direkte relasjon mellom tabellene utover at brukernavn lagres sammen med oppskriften.
 
-Flask fant ikke HTML-filene før jeg flyttet dem inn i templates-mappen, som Flask krever.
+6. Programstruktur
 
-6. Sikkerhet
+Prosjektmappen inneholder Flask-applikasjonen og tilhørende filer. Backend-logikk ligger i app.py, HTML-filene ligger i templates-mappen, og CSS-filer ligger i static-mappen. Miljøvariabler for database-tilkobling er lagret i en .env-fil.
 
-Selv om prosjektet er enkelt, har jeg gjort noen grunnleggende sikkerhetstiltak. Passord lagres ikke direkte, men som hash. Jeg bruker .env-fil for å ikke ha databasepassord direkte i koden. Jeg bruker også parameteriserte spørringer for å unngå SQL-injection.
+Dataflyten i applikasjonen går fra HTML-skjema til Flask-backend, videre til MariaDB-databasen, og deretter tilbake til Flask før det vises dynamisk i HTML ved hjelp av templating.
 
-Skjermbilde av .env  ligger i egen folder (det ligger mer info der men vil ikke at du skal se det hehe)
+7. Kodeforklaring
 
-7. Testing
+Applikasjonen består av flere Flask-ruter som håndterer både GET- og POST-forespørsler. POST-ruter brukes blant annet til registrering av bruker, innlogging og lagring av nye oppskrifter. Data valideres i backend før de lagres i databasen. Ved innlogging brukes sesjoner for å holde brukeren autentisert.
 
-Jeg testet prosjektet ved å:
+8. Sikkerhet og pålitelighet
 
-registrere flere brukere
+Sensitive opplysninger som databasebruker og passord lagres i miljøvariabler og ikke direkte i kildekoden. Passord for brukere lagres som hash i databasen. Alle databasespørringer er parameteriserte for å forhindre SQL-injection. Applikasjonen skiller mellom innloggede og ikke-innloggede brukere ved hjelp av sesjoner, og databaseforbindelser lukkes etter bruk.
 
-logge inn og ut
+9. Feilsøking og testing
 
-legge inn forskjellige oppskrifter
+Under utviklingen oppstod flere feil, blant annet problemer med database-tilgang og interne serverfeil. Access denied-feil ble løst ved å opprette korrekt databasebruker med riktige rettigheter. Internal Server Error oppstod på grunn av feil datatyper sendt fra skjema, og ble løst ved å konvertere verdier før lagring.
 
-sjekke at de dukket opp i databasen
+Testing ble gjort manuelt i nettleser, samt ved å kontrollere databasen direkte for å verifisere at data ble lagret korrekt.
 
-teste sletting
+10. Konklusjon og refleksjon
 
-teste feil passord og feil innlogging
+Gjennom prosjektet har jeg lært hvordan Flask fungerer som backend, hvordan HTML-skjemaer kommuniserer med Python, og hvordan man kobler en applikasjon til en database. Jeg har også fått bedre forståelse for feilsøking, prosjektstruktur og grunnleggende sikkerhet.
 
-8. Konklusjon
+Det som fungerte best var selve databasekoblingen og visning av data. Det mest utfordrende var håndtering av datatyper og database-rettigheter. Dersom prosjektet skulle blitt gjort på nytt, ville jeg satt opp database og brukere tidligere i prosessen.
 
-Prosjektet fungerer slik det var tenkt. Jeg fikk nettsiden til å kommunisere med databasen, og alt av registrering, innlogging og lagring fungerer. Jeg lærte mye om hvordan Flask og MySQL fungerer sammen, og hvordan man strukturerer et lite webprosjekt.
+11. Kildeliste
 
-Skjermbilde av ferdig resultat ligger i egen folder
-________________________________________
-9.	Kildeliste
-https://www.w3schools.com/python/
-https://flask.palletsprojects.com/
-Egen kode fra undervisningen
-
+w3schools.com
+flask.palletsprojects.com
+Undervisningsmateriell og egen kode
